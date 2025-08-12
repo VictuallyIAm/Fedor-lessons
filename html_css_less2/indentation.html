@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Отступы и box-sizing</title>
+    <link rel="stylesheet" href="indentation.css" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <strong>Единицы отступов:</strong><br />
+        <button type="button" class="selected">px</button>
+        <button type="button">%</button>
+        <button type="button">em</button>
+        <button type="button">rem</button>
+        <button type="button">смешанные</button>
+      </section>
+
+      <section>
+        <strong>Режим box-sizing:</strong><br />
+        <button type="button" data-box="content-box" class="selected">
+          content-box
+        </button>
+        <button type="button" data-box="border-box">border-box</button>
+      </section>
+
+      <article>
+        <p>
+          <strong>em</strong> — зависит от <u>размера шрифта элемента</u>.<br />
+          <strong>rem</strong> — зависит от
+          <u>размера шрифта <code>html</code></u
+          >.<br />
+          <strong>%</strong> — рассчитывается от ширины родителя.<br />
+          <strong>px</strong> — фиксированные пиксели.<br />
+        </p>
+        <p>
+          <strong>box-sizing: content-box</strong> — размеры задаются для
+          <em>контента</em>, padding и border добавляются сверху.<br />
+          <strong>box-sizing: border-box</strong> — размеры включают
+          <em>контент + padding + border</em>.
+        </p>
+        <div class="container" id="container">
+          <div class="box px-margin content-box" id="box">margin: 100px</div>
+        </div>
+      </article>
+    </main>
+
+    <script>
+      const marginButtons = Array.from(
+        document.querySelectorAll("section:first-of-type button")
+      );
+      const boxSizingButtons = Array.from(
+        document.querySelectorAll("section:nth-of-type(2) button")
+      );
+      const box = document.getElementById("box");
+
+      marginButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          marginButtons.forEach((btn) => btn.classList.remove("selected"));
+          e.target.classList.add("selected");
+
+          const currentBoxSizing = box.classList.contains("border-box")
+            ? "border-box"
+            : "content-box";
+          box.className = "box " + currentBoxSizing;
+
+          const mode = e.target.textContent;
+          if (mode === "px") {
+            box.classList.add("px-margin");
+            box.textContent = "margin: 100px";
+          } else if (mode === "%") {
+            box.classList.add("percent-margin");
+            box.textContent = "margin: 15%";
+          } else if (mode === "em") {
+            box.classList.add("em-margin");
+            box.textContent = "margin: 8em";
+          } else if (mode === "rem") {
+            box.classList.add("rem-margin");
+            box.textContent = "margin: 8rem";
+          } else if (mode === "смешанные") {
+            box.classList.add("mixed-margin");
+            box.textContent = "top: 15%, right: 5em, bottom: 80px, left: 4rem";
+          }
+        });
+      });
+
+      boxSizingButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          boxSizingButtons.forEach((btn) => btn.classList.remove("selected"));
+          e.target.classList.add("selected");
+
+          const currentMarginClass = Array.from(box.classList).find((cls) =>
+            cls.includes("margin")
+          );
+          box.className =
+            "box " + currentMarginClass + " " + e.target.dataset.box;
+        });
+      });
+    </script>
+  </body>
+</html>

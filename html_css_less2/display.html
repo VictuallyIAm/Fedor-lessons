@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Демонстрация display</title>
+    <link rel="stylesheet" href="display.css" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <button type="button" class="selected">block</button>
+        <button type="button">inline</button>
+        <button type="button">inline-block</button>
+        <button type="button">none</button>
+      </section>
+
+      <article>
+        Some text 1
+        <div class="container block-mode" id="container">
+          <div class="box">Child 1</div>
+          <div class="box">Child 2</div>
+          <div class="box">Child 3</div>
+        </div>
+        Some text 2
+      </article>
+    </main>
+
+    <script>
+      const buttons = Array.from(document.querySelectorAll("button"));
+      const container = document.getElementById("container");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          buttons.forEach((btn) => btn.classList.remove("selected"));
+          e.target.classList.add("selected");
+
+          container.className = "container";
+
+          const mode = e.target.textContent;
+
+          if (mode === "block") {
+            container.classList.add("block-mode");
+            Array.from(container.children).forEach((child) => {
+              child.style.display = "block";
+            });
+          } else if (mode === "inline") {
+            container.classList.add("inline-mode");
+            Array.from(container.children).forEach((child) => {
+              child.style.display = "inline";
+            });
+          } else if (mode === "inline-block") {
+            container.classList.add("inline-block-mode");
+            Array.from(container.children).forEach((child) => {
+              child.style.display = "inline-block";
+            });
+          } else if (mode === "none") {
+            Array.from(container.children).forEach((child) => {
+              child.style.display = "none";
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

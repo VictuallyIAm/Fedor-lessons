@@ -35,7 +35,7 @@ body {
  /* ---------------------------------------------------------- */
 
 .boxes {
-  /* position: relative; */
+  position: static;
 }
 
 .box {
@@ -58,6 +58,9 @@ body {
 .blue {
   background: blue;
   z-index: 1;
+  position: sticky;
+  top: 20px;
+  left: 20px;
 }
 
  /* ---------------------------------------------------------- */
